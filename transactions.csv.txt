@@ -1,0 +1,9 @@
+2025-07-01,Income,Job,Monthly salary,1500.00
+2025-07-02,Expense,Food,Groceries,60.00
+2025-07-03,Expense,Transport,Bus pass,45.00
+2025-07-04,Expense,Entertainment,Cinema,25.00
+2025-07-05,Income,Freelance,Website project,400.00
+2025-07-06,Expense,Food,Coffee and snacks,15.50
+2025-07-07,Expense,Transport,Taxis,30.00
+2025-07-08,Expense,Entertainment,Concert ticket,55.00
+2025-07-09,Expense,Food,Lunch out,22.00
