@@ -27,4 +27,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="requirements.md" />
+    <None Include="filelayout.md" />
+  </ItemGroup>
 </Project>

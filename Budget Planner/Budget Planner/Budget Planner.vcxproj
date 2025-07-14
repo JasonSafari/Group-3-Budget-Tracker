@@ -133,6 +133,10 @@
   <ItemGroup>
     <ClInclude Include="Report.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="filelayout.md" />
+    <None Include="requirements.md" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
