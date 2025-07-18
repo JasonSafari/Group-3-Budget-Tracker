@@ -1,14 +1,13 @@
-﻿#define CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include<string.h>
 #include "Report.h"
 #define MAX_TRANSACTIONS 1000
 #define MAX_CATEGORIES 50
 
-TRANSACTION transactions[MAX_TRANSACTIONS];
-int transactionCount = 0;
 
-void LoadTransactions(char* filename) {
+
+void LoadTransactions(TRANSACTION* transactions, char* filename, int* transactionCount) {
 
 	FILE* file = fopen(filename, "r");
 
@@ -27,7 +26,7 @@ void LoadTransactions(char* filename) {
 		
 		if (sscanf(line, "%10[^,],%9[^,],%19[^,],%49[^,],%lf",
 			t.date, t.type, t.category, t.description, &t.amount) == 5) {
-			transactions[transactionCount++] = t;
+			transactions[(*transactionCount)++] = t;
 		}
 	}
 
@@ -156,5 +155,6 @@ void DetectOverBudget(TRANSACTION* transactions, int transactionCount) {
 	
 	
 	}
+
 
 

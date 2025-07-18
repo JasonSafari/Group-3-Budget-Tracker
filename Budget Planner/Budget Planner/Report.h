@@ -11,7 +11,7 @@ typedef struct transcation{
 
 
 
-void LoadTransactions(char* filename);
+void LoadTransactions(TRANSACTION* transactions, char* filename, int* transactionCount);
 
 
 void ShowAllTransactions(TRANSACTION* transactions, int transactionCount);
