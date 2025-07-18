@@ -14,16 +14,16 @@ typedef struct transcation{
 void LoadTransactions(char* filename);
 
 
-void ShowAllTransactions();
+void ShowAllTransactions(TRANSACTION* transactions, int transactionCount);
 
 
-void SummarizeByCategory();
+void SummarizeByCategory(TRANSACTION* transactions, int transactionCount);
 
 
-void SummarizeIncomeExpense();
+void SummarizeIncomeExpense(TRANSACTION* transactions, int transactionCount);
 
 
-void DetectOverBudget();
+void DetectOverBudget(TRANSACTION* transactions, int transactionCount);
 
 
-void GenerateTrendReport();
+void GenerateTrendReport(TRANSACTION* transactions, int transactionCount);
