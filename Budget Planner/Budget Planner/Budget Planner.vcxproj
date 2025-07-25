@@ -130,10 +130,13 @@
     <ClCompile Include="Input.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Report.c" />
+    <ClCompile Include="Storage.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
     <ClInclude Include="Report.h" />
+    <ClInclude Include="Storage.h" />
+    <ClInclude Include="Transactions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="filelayout.md" />
