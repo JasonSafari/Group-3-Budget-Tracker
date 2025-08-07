@@ -24,12 +24,27 @@
     <ClCompile Include="Input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Storage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Report.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transactions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

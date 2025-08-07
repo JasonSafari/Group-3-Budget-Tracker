@@ -1,34 +1,46 @@
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include "Report.h"
 #include "Input.h"
-#define _CRT_SECURE_NO_WARNINGS
-#define MAX_TRANSACTIONS 1000
+#include "CLI.h"
+
+#define MAX_ENTRIES 1000
 
 int main(void) {
-        int choice;
+    BudgetEntry entries[MAX_ENTRIES];
+    int count = 0;
+    int choice;
 
-        do {
-            printf("\n===== Budget Tracker Menu =====\n");
-            printf("1. Add New Entry\n");
-            printf("2. Exit\n");
-            printf("Enter your choice: ");
-            scanf_s("%d", &choice);
-            while (getchar() != '\n'); // clear input buffer
+    do {
+        showMenu();
+        choice = getMenuChoice();
 
-            switch (choice) {
-            case 1: {
-                BudgetEntry entry = getUserInput();
-                printEntrySummary(entry);
-                break;
+        switch (choice) {
+        case 1:
+            if (count < MAX_ENTRIES) {
+                entries[count] = getUserInput();
+                printEntrySummary(entries[count]);
+                count++;
             }
-            case 2:
-                printf("\nExiting Budget Tracker. Goodbye!\n");
-                break;
-            default:
-                printf("Invalid option. Please enter 1 or 2.\n");
+            else {
+                printf("Maximum entry limit reached.\n");
             }
+            break;
+        case 2:
+            showAllEntries(entries, count);
+            break;
+        case 3:
+            editEntry(entries, count);
+            break;
+        case 4:
+            deleteEntry(entries, &count);
+            break;
+        case 5:
+            printf("\nExiting Budget Tracker. Goodbye!\n");
+            break;
+        default:
+            printf("Invalid option. Please enter a number between 1 and 5.\n");
+        }
+    } while (choice != 5);
 
-        } while (choice != 2);
-
-        return 0;
-    }
+    return 0;
+}
