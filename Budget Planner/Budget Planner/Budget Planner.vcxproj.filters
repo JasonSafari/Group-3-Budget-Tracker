@@ -30,6 +30,9 @@
     <ClCompile Include="fileio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="budget_calculation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Report.h">
@@ -44,7 +47,11 @@
     <ClInclude Include="CLI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="fileio.h">
+=======
+    <ClInclude Include="budget_calculation.h">
+>>>>>>> a27d52d16d4c8fc079f3ac583c3f3a1e7df0985b
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
