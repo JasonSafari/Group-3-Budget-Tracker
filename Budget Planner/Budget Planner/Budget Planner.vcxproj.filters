@@ -30,6 +30,9 @@
     <ClCompile Include="CLI.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="budget_calculation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Report.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="budget_calculation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

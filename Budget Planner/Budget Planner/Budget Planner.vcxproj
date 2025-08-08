@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="budget_calculation.c" />
     <ClCompile Include="CLI.c" />
     <ClCompile Include="Input.c" />
     <ClCompile Include="Main.c" />
@@ -134,6 +135,7 @@
     <ClCompile Include="Storage.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="budget_calculation.h" />
     <ClInclude Include="CLI.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Report.h" />
