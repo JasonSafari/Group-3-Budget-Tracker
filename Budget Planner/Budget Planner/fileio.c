@@ -2,13 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Storage.h"
+#include "fileio.h"
 
-#define MAX_TRANSACTIONS 1000
+//kenneth oluoch
+#define MAX_LINE_LENGTH 256
 
-
-
-// Function to save transactions to a CSV file
+// Save transactions to CSV file
 void SaveTransactionsToFile(const char* filename, TRANSACTION* transactions, int transactionCount) {
     FILE* file = fopen(filename, "w");
     if (!file) {
@@ -29,19 +28,22 @@ void SaveTransactionsToFile(const char* filename, TRANSACTION* transactions, int
     printf("Transactions saved successfully to %s.\n", filename);
 }
 
-// Function to load transactions from a CSV file
+// Load transactions from CSV file
 void LoadTransactionsFromFile(const char* filename, TRANSACTION* transactions, int* transactionCount) {
     FILE* file = fopen(filename, "r");
     if (!file) {
         printf("Error: Could not open file %s for reading.\n", filename);
+        *transactionCount = 0;
         return;
     }
 
-    char line[200];
+    char line[MAX_LINE_LENGTH];
     *transactionCount = 0;
 
     while (fgets(line, sizeof(line), file)) {
         TRANSACTION t;
+
+        // Parse CSV line into transaction fields
         if (sscanf(line, "%10[^,],%9[^,],%19[^,],%49[^,],%lf",
             t.date, t.type, t.category, t.description, &t.amount) == 5) {
             transactions[(*transactionCount)++] = t;

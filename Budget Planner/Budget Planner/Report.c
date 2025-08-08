@@ -3,14 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Report.h"
-#include "Transactions.h"
-#include "Storage.h"
+#include "Transactions.h"  // TRANSACTION struct definition
 
 #define MAX_TRANSACTIONS 1000
 #define MAX_CATEGORIES 50
 
 void LoadTransactions(TRANSACTION* transactions, char* filename, int* transactionCount) {
-
     FILE* file = fopen(filename, "r");
     if (!file) {
         printf("Error: Could not open file %s\n", filename);
@@ -119,18 +117,32 @@ void GenerateTrendReport(TRANSACTION* transactions, int transactionCount) {
     printf("Date       | Total Spent\n");
     printf("--------------------------\n");
 
+    // Track dates already reported
+    char processedDates[MAX_TRANSACTIONS][11]; // assuming date format YYYY-MM-DD max 10 chars + '\0'
+    int processedCount = 0;
+
     for (int i = 0; i < transactionCount; i++) {
-        if (strcmp(transactions[i].type, "Expense") == 0) {
-            double total = transactions[i].amount;
-            for (int j = i + 1; j < transactionCount; j++) {
-                if (strcmp(transactions[i].date, transactions[j].date) == 0 &&
-                    strcmp(transactions[j].type, "Expense") == 0) {
-                    total += transactions[j].amount;
-                    transactions[j].amount = 0; // Mark as counted
-                }
+        if (strcmp(transactions[i].type, "Expense") != 0)
+            continue;
+
+        // Check if date was already processed
+        int alreadyProcessed = 0;
+        for (int k = 0; k < processedCount; k++) {
+            if (strcmp(processedDates[k], transactions[i].date) == 0) {
+                alreadyProcessed = 1;
+                break;
             }
-            if (transactions[i].amount > 0)
-                printf("%-10s | $%.2f\n", transactions[i].date, total);
         }
+        if (alreadyProcessed) continue;
+
+        double total = 0.0;
+        for (int j = 0; j < transactionCount; j++) {
+            if (strcmp(transactions[j].date, transactions[i].date) == 0 &&
+                strcmp(transactions[j].type, "Expense") == 0) {
+                total += transactions[j].amount;
+            }
+        }
+        strcpy(processedDates[processedCount++], transactions[i].date);
+        printf("%-10s | $%.2f\n", transactions[i].date, total);
     }
 }

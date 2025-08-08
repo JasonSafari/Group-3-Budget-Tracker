@@ -128,16 +128,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CLI.c" />
+    <ClCompile Include="fileio.c" />
     <ClCompile Include="Input.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Report.c" />
-    <ClCompile Include="Storage.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLI.h" />
+    <ClInclude Include="fileio.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Report.h" />
-    <ClInclude Include="Storage.h" />
     <ClInclude Include="Transactions.h" />
   </ItemGroup>
   <ItemGroup>
