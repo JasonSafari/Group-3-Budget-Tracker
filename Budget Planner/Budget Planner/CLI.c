@@ -41,8 +41,9 @@ void showAllEntries(TRANSACTION entries[], int count) {
     }
 }
 
-void editEntry(TRANSACTION entries[], int count) {
+void editEntry(TRANSACTION entries[], int count, int capacity) {
     int index;
+    if (count > capacity) count = capacity;  // never index past the real array size
     printf("Enter the entry number to edit (1-%d): ", count);
     int result = scanf("%d", &index);
     if (result != 1) {
@@ -52,7 +53,7 @@ void editEntry(TRANSACTION entries[], int count) {
     }
     while (getchar() != '\n'); // clear buffer
 
-    if (index < 1 || index > count) {
+    if (index < 1 || index > count || index > capacity) {
         printf("Invalid entry number.\n");
         return;
     }
@@ -67,8 +68,9 @@ void editEntry(TRANSACTION entries[], int count) {
     printf("Amount     : $%.2f\n", entries[index - 1].amount);
 }
 
-void deleteEntry(TRANSACTION entries[], int* count) {
+void deleteEntry(TRANSACTION entries[], int* count, int capacity) {
     int index;
+    if (*count > capacity) *count = capacity;  // never index past the real array size
     printf("Enter the entry number to delete (1-%d): ", *count);
     int result = scanf("%d", &index);
     if (result != 1) {
@@ -78,7 +80,7 @@ void deleteEntry(TRANSACTION entries[], int* count) {
     }
     while (getchar() != '\n'); // clear buffer
 
-    if (index < 1 || index > *count) {
+    if (index < 1 || index > *count || index > capacity) {
         printf("Invalid entry number.\n");
         return;
     }
