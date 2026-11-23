@@ -37,16 +37,19 @@ jobs:
       - name: Build and run unit tests with coverage
         run: |
           SRC="Budget Planner/Budget Planner"
-          gcc -std=c11 -O0 --coverage tests/test_budget_calculation.c "$SRC/budget_calculation.c" -o run_tests_calc
-          gcc -std=c11 -O0 --coverage tests/test_input.c "$SRC/Input.c" -o run_tests_input
-          gcc -std=c11 -O0 --coverage tests/test_cli.c "$SRC/CLI.c" "$SRC/Input.c" -o run_tests_cli
+          T="Budget Planner/Budget Planner Tests"
+          gcc -std=c11 -O0 --coverage "$T/Test budget calculation.c" "$SRC/budget_calculation.c" -o run_tests_calc
+          gcc -std=c11 -O0 --coverage "$T/Test Input.c" "$SRC/Input.c" -o run_tests_input
+          gcc -std=c11 -O0 --coverage "$T/Test CLI.c" "$SRC/CLI.c" "$SRC/Input.c" -o run_tests_cli
           ./run_tests_calc
           ./run_tests_input
           ./run_tests_cli
 
       - name: Generate coverage report (SonarQube generic format)
         run: >
-          gcovr --root . --filter "Budget Planner/" --sonarqube coverage.xml
+          gcovr --root . --filter "Budget Planner/"
+          --exclude "Budget Planner/Budget Planner Tests/"
+          --sonarqube coverage.xml
 
       - name: SonarQube Cloud scan
         uses: SonarSource/sonarqube-scan-action@v6
