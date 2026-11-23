@@ -1,0 +1,34 @@
+name: SonarQube Cloud
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Install Sonar build wrapper
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v6
+      # Replaces the template's placeholder test/build step. The project is C
+      # and has no test framework, so we build it under the build wrapper
+      # (required for C analysis) instead of running tests.
+      - name: Build with build wrapper
+        working-directory: Budget Planner/Budget Planner
+        run: build-wrapper-linux-x86-64 --out-dir "$GITHUB_WORKSPACE/$BUILD_WRAPPER_OUT_DIR" gcc -std=c11 *.c -o budget_tracker
+      - name: SonarQube Cloud scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.cfamily.build-wrapper-output=${{ env.BUILD_WRAPPER_OUT_DIR }}

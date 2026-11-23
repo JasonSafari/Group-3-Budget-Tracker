@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdbool.h>
 
 // Function Prototypes
 float calculate_total(float values[], int count);
