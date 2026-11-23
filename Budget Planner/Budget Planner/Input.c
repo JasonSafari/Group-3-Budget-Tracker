@@ -25,15 +25,28 @@ int isValidType(const char* type) {
     return strcmp(type, "income") == 0 || strcmp(type, "expense") == 0;
 }
 
-// Validate amount input (checks for numeric string)
-int isValidAmount(const char* str) {
-    int i = 0;
-    int decimalFound = 0;
-    // Optional leading + or -
-    if (str[0] == '+' || str[0] == '-') i++;
+// Validate amount input (checks for numeric string).
+// The string is examined only up to its first newline or terminator, and never
+// beyond MAX_AMOUNT_LENGTH characters, so the index can never run off the buffer.
+#define MAX_AMOUNT_LENGTH 64
 
+int isValidAmount(const char* str) {
+    if (str == NULL) return 0;
+
+    size_t len = 0;
+    while (len <= MAX_AMOUNT_LENGTH && str[len] != '\0' && str[len] != '\n') {
+        len++;
+    }
+    if (len > MAX_AMOUNT_LENGTH) return 0;  // too long to be a sensible amount
+
+    size_t i = 0;
+    int decimalFound = 0;
     int digitsFound = 0;
-    for (; str[i] != '\0' && str[i] != '\n'; i++) {
+
+    // Optional leading + or -
+    if (len > 0 && (str[0] == '+' || str[0] == '-')) i++;
+
+    for (; i < len; i++) {
         if (isdigit((unsigned char)str[i])) {
             digitsFound = 1;
         }

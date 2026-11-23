@@ -35,10 +35,10 @@ int main(void) {
             showAllEntries(entries, count);   // Make sure this expects TRANSACTION[]
             break;
         case 3:
-            editEntry(entries, count);         // Same, update to TRANSACTION[]
+            editEntry(entries, count, MAX_ENTRIES);         // Same, update to TRANSACTION[]
             break;
         case 4:
-            deleteEntry(entries, &count);      // Same, update to TRANSACTION[]
+            deleteEntry(entries, &count, MAX_ENTRIES);      // Same, update to TRANSACTION[]
             break;
         case 5:
             // Save all transactions before exit
