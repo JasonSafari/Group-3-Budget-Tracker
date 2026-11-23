@@ -16,15 +16,38 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 0   # full history for blame and new-code detection
+
+      # --- Language toolchain: C (gcc is preinstalled on ubuntu-latest) ---
+      - name: Install coverage tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gcc
+          python3 -m pip install gcovr
+
       - name: Install Sonar build wrapper
         uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v6
-      # Replaces the template's placeholder test/build step. The project is C
-      # and has no test framework, so we build it under the build wrapper
-      # (required for C analysis) instead of running tests.
-      - name: Build with build wrapper
-        working-directory: Budget Planner/Budget Planner
-        run: build-wrapper-linux-x86-64 --out-dir "$GITHUB_WORKSPACE/$BUILD_WRAPPER_OUT_DIR" gcc -std=c11 *.c -o budget_tracker
+
+      # C analysis needs real compile data, so build the app under the wrapper.
+      - name: Build application
+        run: >
+          build-wrapper-linux-x86-64 --out-dir "$BUILD_WRAPPER_OUT_DIR"
+          gcc -std=c11 -Wall -Wextra "Budget Planner/Budget Planner"/*.c -o budget_tracker
+
+      - name: Build and run unit tests with coverage
+        run: |
+          SRC="Budget Planner/Budget Planner"
+          gcc -std=c11 -O0 --coverage tests/test_budget_calculation.c "$SRC/budget_calculation.c" -o run_tests_calc
+          gcc -std=c11 -O0 --coverage tests/test_input.c "$SRC/Input.c" -o run_tests_input
+          gcc -std=c11 -O0 --coverage tests/test_cli.c "$SRC/CLI.c" "$SRC/Input.c" -o run_tests_cli
+          ./run_tests_calc
+          ./run_tests_input
+          ./run_tests_cli
+
+      - name: Generate coverage report (SonarQube generic format)
+        run: >
+          gcovr --root . --filter "Budget Planner/" --sonarqube coverage.xml
+
       - name: SonarQube Cloud scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
@@ -32,3 +55,4 @@ jobs:
         with:
           args: >
             -Dsonar.cfamily.build-wrapper-output=${{ env.BUILD_WRAPPER_OUT_DIR }}
+            -Dsonar.coverageReportPaths=coverage.xml
